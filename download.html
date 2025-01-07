@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- Optional SEO meta -->
+    <meta name="description" content="下载 Classland 最新构建 - 体验全新的桌面课表" />
+    <meta name="keywords" content="Classland, 课表, 上下课提醒" />
+
+    <!-- Preconnect for performance -->
+    <link rel="preconnect" href="https://cdn.jsdelivr.net" />
+    <link rel="preconnect" href="https://unpkg.com" />
+    <link rel="preconnect" href="https://code.jquery.com" />
+
+    <!-- Favicon -->
+    <link rel="icon" href="https://github.com/Class-Widgets/Class-Widgets/raw/main/img/Logo.png" type="image/x-icon" />
+
+    <title>Class Widgets - 全新桌面课表 | LaoShui</title>
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="src/css/style.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" />
+    <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
+</head>
+
+<body class="bg-color-rgb font-family-inter letter-spacing-negative-0-01em text-color-gray-50 font-smoothing-antialiased">
+<header>
+    <h1>Class Widgets - 全新桌面课表 | Download</h1>
+    <button id="page-settings-btn" aria-label="Page settings Options">
+        <i class="fas fa-page-settings"></i> 页面设置
+    </button>
+
+    <nav id="page-settings-menu" aria-hidden="true">
+        <!-- Toggle "Adjust Section Width" -->
+        <button id="toggle-width">调整版面宽度</button>
+        <div id="width-section" style="display: none;">
+            <label for="section-width">调整版面宽度</label>
+            <select id="section-width" aria-label="Section Width">
+                <option value="100%">全宽</option>
+                <option value="75%">75% 宽度</option>
+                <option value="50%" selected>50% 宽度</option>
+                <option value="25%">25% 宽度</option>
+            </select>
+        </div>
+
+        <!-- Toggle "Adjust Alignment" -->
+        <button id="toggle-alignment">调整对齐方式</button>
+        <div id="alignment-section" style="display: none;">
+            <!-- Main alignment -->
+            <label for="alignment">调整主对齐方式</label>
+            <select id="alignment" aria-label="Alignment">
+                <option value="flex-start">左对齐</option>
+                <option value="center" selected>居中</option>
+                <option value="flex-end">右对齐</option>
+                <option value="space-between">两端对齐</option>
+            </select>
+
+            <!-- Beta header alignment -->
+            <label for="beta-alignment">Beta 版本对齐</label>
+            <select id="beta-alignment">
+                <option value="left" selected>左对齐</option>
+                <option value="center">居中</option>
+                <option value="right">右对齐</option>
+            </select>
+
+            <!-- Releases header alignment -->
+            <label for="releases-alignment">正式版对齐</label>
+            <select id="releases-alignment">
+                <option value="left">左对齐</option>
+                <option value="center" selected>居中</option>
+                <option value="right">右对齐</option>
+            </select>
+        </div>
+
+        <!-- Toggle Beta / Releases Sections and Reset -->
+        <button id="toggle-beta-section">切换 Beta 版本</button>
+        <button id="toggle-releases-section">切换 正式版</button>
+        <button id="reset-defaults">重置为默认</button>
+    </nav>
+</header>
+
+<!-- Download count -->
+<div id="download-count">总下载量：等待中...</div>
+
+<!-- Example buttons container (Optional) -->
+<div class="buttons-container">
+    <a href="https://nightly.link/Class-Widgets/Class-Widgets/workflows/build/main/windows-latest-x64.zip" class="button">下载最新构建(Windows-x64)</a>
+    <a href="https://nightly.link/Class-Widgets/Class-Widgets/workflows/build/main/windows-latest-x86.zip" class="button">下载最新构建(Windows-x86)</a>
+    <a href="https://nightly.link/Class-Widgets/Class-Widgets/workflows/build/main/ubuntu-20.04-x64.zip" class="button">下载最新构建(Ubuntu-20.04-x64)</a>
+    <a href="http://qm.qq.com/cgi-bin/qm/qr?_wv=1027&k=yHXKCAjOxlpTpJ4mNdXm0mxOneYUinRs&authKey=sd3%2F06iGdOZUjkXXPBeIzGnFDIeYwmdwuM8dhk25fi%2B1CUL32MkeN2EEfjdo2pzE&noverify=0&group_code=169200380" class="button" target="_blank">
+        加入QQ群
+    </a>
+</div>
+
+<main class="container mx-auto max-w-72rem px-4 md:px-6">
+    <!-- Beta Section -->
+    <section class="section" id="artifacts-section">
+        <h2 id="beta-header">Beta 版本</h2>
+        <div class="space" id="loading-badge">
+            <div class="mdui-spinner"></div>
+        </div>
+        <table class="mdui-table mdui-hoverable">
+            <thead>
+            <tr>
+                <th>提交</th>
+                <th>日期</th>
+                <th>构建</th>
+                <th>更新日志</th>
+            </tr>
+            </thead>
+            <tbody id="tbody"></tbody>
+        </table>
+    </section>
+
+    <!-- Releases Section -->
+    <section class="section" id="releases-section">
+        <h2 id="releases-header">正式版</h2>
+        <div id="releases-tbody"></div>
+    </section>
+</main>
+
+<footer class="footer">
+    <div class="footer-content">
+        <p>Powered by LaoShui @ 2025</p>
+        <p>All Rights Reserved.</p>
+        <p class="footer-test">测试内容 不代表最终成果</p>
+    </div>
+</footer>
+
+<!-- JavaScript (deferred for performance) -->
+<script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js" defer></script>
+<script src="https://unpkg.com/swiper/swiper-bundle.min.js" defer></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js" defer></script>
+
+<!-- Your main script -->
+<script src="src/js/main.js" defer></script>
+
+<!-- Initialize AOS after the DOM is parsed -->
+<script defer>
+    document.addEventListener('DOMContentLoaded', function() {
+        AOS.init({
+            once: true,
+            disable: () => window.innerWidth < 768,
+            duration: 1000,
+            easing: 'ease-out-cubic'
+        });
+    });
+</script>
+</body>
+</html>
