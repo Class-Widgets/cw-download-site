@@ -4154,6 +4154,15 @@ tr {
     opacity: 0.8;
 }
 
+.footer a {
+    color: inherit; /* 继承父元素的颜色 */
+    text-decoration: none; /* 去掉下划线 */
+}
+
+.footer a:hover {
+    text-decoration: underline; /* 鼠标悬停时显示下划线 */
+}
+
 /* Mobile responsiveness */
 @media (max-width: 768px) {
     .footer {
