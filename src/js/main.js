@@ -481,7 +481,7 @@ document.addEventListener('DOMContentLoaded', () => {
             download_links: {
                 win_x64: `https://nightly.link/Class-Widgets/Class-Widgets/actions/runs/${artifact_id}/windows-latest-x64.zip`,
                 win_x86: `https://nightly.link/Class-Widgets/Class-Widgets/actions/runs/${artifact_id}/windows-latest-x86.zip`,
-                ubuntu: `https://nightly.link/Class-Widgets/Class-Widgets/actions/runs/${artifact_id}/ubuntu-20.04-x64.zip`
+                ubuntu: `https://nightly.link/Class-Widgets/Class-Widgets/actions/runs/${artifact_id}/ubuntu-20.04-x64.zip`,
                 macos-13-bundle: `https://nightly.link/Class-Widgets/Class-Widgets/actions/runs/${artifact_id}/macos-13-bundle.zip`
             }
         });
@@ -552,7 +552,7 @@ document.addEventListener('DOMContentLoaded', () => {
             });
     }
 
-    // Fetch GitHub workflow runs (Beta builds) and add them to the Beta table.
+    // Fetch GitHub workflow runs (Beta builds) ONLY from main branch
     async function fetchWorkflowRuns() {
         let page = 1;
         let hasMorePages = true;
@@ -562,17 +562,20 @@ document.addEventListener('DOMContentLoaded', () => {
             const data = await response.json();
 
             if (data.workflow_runs.length > 0) {
-                data.workflow_runs.forEach(run => {
-                    const {
-                        id,
-                        head_commit: {
-                            id: sha,
-                            timestamp,
-                            message
-                        }
-                    } = run;
-                    addBetaVer(sha, timestamp, message, id);
-                });
+                // 添加分支过滤条件
+                data.workflow_runs
+                    .filter(run => run.head_branch === 'main') // 只保留main分支的构建
+                    .forEach(run => {
+                        const {
+                            id,
+                            head_commit: {
+                                id: sha,
+                                timestamp,
+                                message
+                            }
+                        } = run;
+                        addBetaVer(sha, timestamp, message, id);
+                    });
                 page++;
             } else {
                 hasMorePages = false;
