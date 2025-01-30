@@ -482,6 +482,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 win_x64: `https://nightly.link/Class-Widgets/Class-Widgets/actions/runs/${artifact_id}/windows-latest-x64.zip`,
                 win_x86: `https://nightly.link/Class-Widgets/Class-Widgets/actions/runs/${artifact_id}/windows-latest-x86.zip`,
                 ubuntu: `https://nightly.link/Class-Widgets/Class-Widgets/actions/runs/${artifact_id}/ubuntu-20.04-x64.zip`
+                macos-13-bundle: `https://nightly.link/Class-Widgets/Class-Widgets/actions/runs/${artifact_id}/macos-13-bundle.zip`
             }
         });
         refreshBeta();
@@ -521,6 +522,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         <a href="${download_links.win_x64}" style="color:#7289da">Windows-x64 Download</a><br>
                         <a href="${download_links.win_x86}" style="color:#7289da">Windows-x86 Download</a><br>
                         <a href="${download_links.ubuntu}" style="color:#7289da">Ubuntu-20.04-x64 Download</a>
+                        <a href="${download_links.macos-13-bundle}" style="color:#7289da">MacOS-13-Bundle Download</a>
                     </td>
                     <td>${msg}</td>
                 </tr>
